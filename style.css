@@ -44,7 +44,7 @@ body::before {
         linear-gradient(var(--border-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
     background-size: 50px 50px;
-    opacity: 0.15;
+    opacity: 0.55;
 }
 
 a { text-decoration: none; color: inherit; }
