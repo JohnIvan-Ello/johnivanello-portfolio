@@ -14,7 +14,7 @@
 
     <nav class="banner-nav">
         <div class="banner-nav-links">
-            <a href="#" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;">Home</a>
+            <a href="#home">Home</a>
             <a href="#about-me">About</a>
             <a href="#education">Education</a>
             <a href="#projects">Portfolio</a>
@@ -24,7 +24,7 @@
 
     <header class="top-banner">
         <div class="banner-image-container">
-            <img src="img/banner-art.jpg" alt="Banner Art" class="banner-img">
+            <img src="../img/banner-art.jpg" alt="Banner Art" class="banner-img">
         </div>
     </header>
 
@@ -34,7 +34,7 @@
             <span></span>
         </label>
         <ul class="nav-links">
-            <li><a href="#" onclick="window.scrollTo({top:0, behavior:'smooth'}); return false;"><i class="fa-solid fa-house"></i> Home</a></li>
+            <li><a href="#home"><i class="fa-solid fa-house"></i> Home</a></li>
             <li><a href="#about-me"><i class="fa-solid fa-user"></i> About</a></li>
             <li><a href="#education"><i class="fa-solid fa-graduation-cap"></i> Education</a></li>
             <li><a href="#projects"><i class="fa-solid fa-book"></i> Portfolio</a></li>
@@ -43,7 +43,7 @@
     </nav>
 
     <main>
-        <section class="hero">
+        <section id="home" class="hero">
             <div class="hero-content-wrapper">
                 <div class="hero-text-side">
                     <div class="animate-load-1">
@@ -60,14 +60,14 @@
                 <div class="animate-load-3">
                     <div class="profile-wrap">
                         <div class="chrome-spinner"></div>
-                        <img src="img/ivan.jpg" alt="John Ivan Ello" class="hero-avatar">
+                        <img src="../img/ivan.jpg" alt="John Ivan Ello" class="hero-avatar">
                         <div class="status-dot pulse"></div>
                     </div>
                 </div>
             </div>
 
             <div class="scroll-arrow-container animate-load-4">
-                <img src="img/arrow-down.png" alt="Scroll Down" class="scroll-arrow">
+                <img src="../img/arrow-down.png" alt="Scroll Down" class="scroll-arrow">
             </div>
         </section>
 
@@ -78,11 +78,11 @@
                 <div class="bio-wrapper">
                     <div class="bio-slideshow-frame">
                         <div class="bio-slideshow">
-                            <img src="img/SS1.png" class="bio-slide">
-                            <img src="img/SS2.png" class="bio-slide">
-                            <img src="img/SS3.png" class="bio-slide">
-                            <img src="img/SS4.png" class="bio-slide">
-                            <img src="img/SS5.png" class="bio-slide">
+                            <img src="../img/SS1.png" class="bio-slide">
+                            <img src="../img/SS2.png" class="bio-slide">
+                            <img src="../img/SS3.png" class="bio-slide">
+                            <img src="../img/SS4.png" class="bio-slide">
+                            <img src="../img/SS5.png" class="bio-slide">
                         </div>
                         <div class="bio-scanline"></div>
                     </div>
@@ -194,7 +194,7 @@
                         <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="window-content">
-                        <div class="circle-frame"><img src="img/gamedevbg.png" alt="Game Dev"></div>
+                        <div class="circle-frame"><img src="../img/gamedevbg.png" alt="Game Dev"></div>
                         <h3>Game Development</h3>
                     </div>
                 </div>
@@ -203,7 +203,7 @@
                         <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="window-content">
-                        <div class="circle-frame"><img src="img/webdevbg.png" alt="Web Dev"></div>
+                        <div class="circle-frame"><img src="../img/webdevbg.png" alt="Web Dev"></div>
                         <h3>Web Development</h3>
                     </div>
                 </div>
@@ -212,7 +212,7 @@
                         <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="window-content">
-                        <div class="circle-frame"><img src="img/iotbg.jpg" alt="IoT"></div>
+                        <div class="circle-frame"><img src="../img/iotbg.jpg" alt="IoT"></div>
                         <h3>Internet of Things</h3>
                     </div>
                 </div>
@@ -221,7 +221,7 @@
                         <div class="dots"><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
                     </div>
                     <div class="window-content">
-                        <div class="circle-frame"><img src="img/qabg.png" alt="QA"></div>
+                        <div class="circle-frame"><img src="../img/qabg.png" alt="QA"></div>
                         <h3>Quality Assurance</h3>
                     </div>
                 </div>
@@ -294,8 +294,8 @@
         </section>
 
         <div class="versa-wrapper">
-            
             <div class="versa-window" id="versaWindow">
+                
                 <div class="versa-header">
                     <div class="versa-header-content">
                         <div class="versa-icon-container">
@@ -326,12 +326,12 @@
                         <i class="fa-solid fa-arrow-up"></i>
                     </button>
                 </div>
+                
             </div>
             
             <button class="versa-toggle pulse" onclick="toggleVersa()">
                 <i class="fa-solid fa-robot"></i>
             </button>
-
         </div>
 
     </main>
@@ -433,61 +433,190 @@
             });
         });
 
+        // Slideshow Management Logic
+        let slideshowIntervals = new Map();
+
+        function startSlideshow(wrapper) {
+            clearInterval(slideshowIntervals.get(wrapper));
+            const interval = setInterval(() => {
+                changeSlideBy(wrapper, 1);
+            }, 2000); 
+            slideshowIntervals.set(wrapper, interval);
+        }
+
+        function stopSlideshow(wrapper) {
+            clearInterval(slideshowIntervals.get(wrapper));
+            slideshowIntervals.delete(wrapper);
+            resetSlide(wrapper);
+        }
+
+        function changeSlideBy(wrapper, direction) {
+            let slides = wrapper.querySelectorAll('.slide-img');
+            let indicators = wrapper.querySelectorAll('.indicator');
+            if (!slides.length) return;
+
+            let currentIndex = Array.from(slides).findIndex(s => s.classList.contains('active'));
+            let nextIndex = (currentIndex + direction + slides.length) % slides.length;
+
+            slides[currentIndex].classList.remove('active');
+            slides[nextIndex].classList.add('active');
+
+            if(indicators.length) {
+                indicators[currentIndex].classList.remove('active');
+                indicators[nextIndex].classList.add('active');
+            }
+        }
+
+        function changeSlide(btn, direction, event) {
+            event.stopPropagation();
+            let wrapper = btn.closest('.slideshow-wrapper');
+            changeSlideBy(wrapper, direction);
+            startSlideshow(wrapper);
+        }
+
+        function resetSlide(wrapper) {
+            let slides = wrapper.querySelectorAll('.slide-img');
+            let indicators = wrapper.querySelectorAll('.indicator');
+            slides.forEach(s => s.classList.remove('active'));
+            indicators.forEach(i => i.classList.remove('active'));
+            if(slides[0]) slides[0].classList.add('active');
+            if(indicators[0]) indicators[0].classList.add('active');
+        }
+
         // Project Data 
         const projectData = {
             game: [
-                { title: "Underground Laboratory", desc: "A game environment prototype created for an SCP-inspired project focusing on spatial design, atmospheric lighting, and immersive sci-fi worldbuilding.", img: "img/gamedevbg.png", links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/4515596630/Underground-Laboratory" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/SCP-Underground-Laboratory" }] },
-                { title: "Project DBSR", desc: "Dragon Ball inspired game project featuring environments like the Tournament of Power arena and Zen-Oh’s Mansion, including custom character cosmetics.", img: "img/dbsrmodal.jpg", links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/4743701290/Project-DBSR-Earth" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Project-DBSR" }] },
-                { title: "rObby", desc: "Obstacle course game inspired by popular anime. Features diverse platforming challenges like kill bricks and moving obstacles that test precision.", img: "img/robbymodal.jpg", links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/82816469630007/rObby" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/rObby" }] },
-                { title: "Shin No Tower", desc: "Inspired by Tower of God. Translates the tower’s floors into battleground maps where strategy and skill determine success.", img: "img/shinnotowermodal.jpg", links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/91474925380909/Shin-No-Tower-First-Floor" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Shin-No-Tower" }] },
-                { title: "World of Stands", desc: "Roblox game inspired by JoJo's Bizarre Adventure. Features iconic Stand battles, dynamic combat mechanics, and interactive environments.", img: "img/worldofstandsmodal.jpg", links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/4723191631/World-of-Stands-Morioh" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/World-of-Stands" }] },
-                { title: "Weaponry", desc: "A collection of 3D weapons created using Maya, Blender and Unity, optimized for performance and visual fidelity within Roblox Studio.", img: "img/weaponrymodal.jpg", links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Weaponry" }] }
+                { 
+                    title: "Underground Laboratory", 
+                    desc: "A game environment prototype created for an SCP-inspired project focusing on spatial design, atmospheric lighting, and immersive sci-fi worldbuilding.", 
+                    img: "../img/gamedevbg.png", 
+                    images: ["../img/gamedevbg.png", "../img/airlock-transition-room.jpg",  "../img/containment-viewing-deck.jpg", "../img/cryo-stasis-laboratory.jpg", "../img/hazardous-zone-entrance.jpg", "../img/industrial-access-tunnel.jpg", "../img/logistics-storage-hangar.jpg", "../img/mass-containment-unit.jpg", "../img/minimalist-crew-corridor.jpg", "../img/neon-security-corridor.jpg", "../img/omega-core-lighting.jpg", "../img/reactor-core-facility.jpg", "../img/sector-alert-hallway.jpg", "../img/underwater-observation-deck.jpg"],
+                    links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/4515596630/Underground-Laboratory" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/SCP-Underground-Laboratory" }] 
+                },
+                { 
+                    title: "Project DBSR", 
+                    desc: "Dragon Ball inspired game project featuring environments like the Tournament of Power arena and Zen-Oh’s Mansion, including custom character cosmetics.", 
+                    img: "../img/dbsrmodal.jpg", 
+                    images: ["../img/dbsrmodal.jpg", "../img/arena-ground-perspective.jpg", "../img/arena-low-poly-overview.jpg", "../img/arena-top-down-geometry.jpg", "../img/celestial-pillar-hall.jpg", "../img/character-assets-showcase.jpg", "../img/combat-arena-layout.jpg", "../img/cosmic-shrine-exterior.jpg", "../img/modular-roof-geometry.jpg", "../img/stylized-world-panorama.jpg", "../img/temple-facade-detail.jpg", "../img/throne-of-the-stars.jpg"],
+                    links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/4743701290/Project-DBSR-Earth" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Project-DBSR" }] 
+                },
+                { 
+                    title: "rObby", 
+                    desc: "Obstacle course game inspired by popular anime. Features diverse platforming challenges like kill bricks and moving obstacles that test precision.", 
+                    img: "../img/robbymodal.jpg", 
+                    images: ["../img/robbymodal.jpg", "../img/checkerboard-low-angle.jpg", "../img/floating-platform-assets.jpg", "../img/jason-titles.jpg", "../img/kagune-hazard-design.jpg", "../img/obby-arena-overview.jpg", "../img/obstacle-cage-mechanic.jpg", "../img/rubble-detail-shot.jpg"],
+                    links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/82816469630007/rObby" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/rObby" }] 
+                },
+                { 
+                    title: "Shin No Tower", 
+                    desc: "Inspired by Tower of God. Translates the tower’s floors into battleground maps where strategy and skill determine success.", 
+                    img: "../img/shinnotowermodal.jpg", 
+                    images: ["../img/shinnotowermodal.jpg", "../img/barren-wasteland-terrain.jpg", "../img/containment-gate-visual.jpg", "../img/geometric-hub-interior.jpg", "../img/mural-corridor-lighting.jpg", "../img/neon-training-sector.jpg", "../img/tower-ceiling-radial.jpg"],
+                    links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/91474925380909/Shin-No-Tower-First-Floor" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Shin-No-Tower" }] 
+                },
+                { 
+                    title: "World of Stands", 
+                    desc: "Roblox game inspired by JoJo's Bizarre Adventure. Features iconic Stand battles, dynamic combat mechanics, and interactive environments.", 
+                    img: "../img/worldofstandsmodal.jpg", 
+                    images: [
+                        "../img/worldofstandsmodal.jpg",
+                        "../img/ger-character-model-ortho.jpg",
+                        "../img/killer-queen-asset-showcase.jpg",
+                        "../img/morioh-town-environment.jpg",
+                        "../img/stand-model-comparison.jpg",
+                        "../img/the-world-king-crimson-models.jpg"
+                    ],
+                    links: [{ label: "View Game", class: "btn-primary", href: "https://www.roblox.com/games/4723191631/World-of-Stands-Morioh" }, { label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/World-of-Stands" }] 
+                },
+                { 
+                    title: "Weaponry", 
+                    desc: "A collection of 3D weapons created using Maya, Blender and Unity, optimized for performance and visual fidelity within Roblox Studio.", 
+                    img: "../img/weaponrymodal.jpg", 
+                    images: ["../img/weaponrymodal.jpg", "../img/blood-rapier-wireframe.jpg", "../img/bow-and-arrow.jpg", "../img/ichigo-wireframe.jpg", "../img/princess-jaha-handle.jpg", "../img/requiem-arrow.jpg", "../img/scifi-cubesword-wireframe.jpg", "../img/scifi-cyberkatana-wireframe.jpg", "../img/sniper-wireframe.jpg"],
+                    links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Weaponry" }] 
+                }
             ],
             web: [
-                { title: "Jomelle's Toys and Accessories E-Commerce System", desc: "A web-based platform for online retail, allowing users to browse products, add items to their cart, and complete purchases.", img: "img/webdevbg.png", links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Jomelle-s-Toys-and-Accessories-E-Commerce-System/blob/main/documentation/user-manual.md" }, { label: "View Source", class: "btn-primary", href: "https://github.com/JohnIvan-Ello/Jomelle-s-Toys-and-Accessories-E-Commerce-System" }] },
-                { title: "Haribon Real Estate E-Commerce System", desc: "A mobile-first platform designed for property sales and rentals.", img: "img/haribonestatemodal.jpg", links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Haribon-Matrix-Hardware-E-Commerce/blob/main/documentation/user-manual.md" }, { label: "View Source", class: "btn-primary", href: "https://github.com/JohnIvan-Ello/Haribon-Real-Estate-E-Commerce-System" }] },
-                { title: "Haribon Matrix Hardware E-Commerce", desc: "A web-based platform for a hardware supplies store.", img: "img/haribonmatrixmodal.jpg", links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Haribon-Real-Estate-E-Commerce-System/blob/main/documentation/user-manual.md" }, { label: "View Source", class: "btn-primary", href: "https://github.com/JohnIvan-Ello/Haribon-Matrix-Hardware-E-Commerce" }] }
+                { 
+                    title: "Jomelle's Toys and Accessories E-Commerce System", 
+                    desc: "A web-based platform for online retail, allowing users to browse products, add items to their cart, and complete purchases.", 
+                    img: "../img/webdevbg.png", 
+                    images: ["../img/webdevbg.png", "../img/admin-login.png", "../img/cart.png", "../img/categories.png", "../img/jt-checkout.png", "../img/jt-company-details.png", "../img/customer-login.png", "../img/jt-edit-profile.png", "../img/jt-forgot-password.png", "../img/jt-homepage1.png", "../img/jt-homepage2.png", "../img/jomellebg.png", "../img/my-account.png", "../img/payment-options.png", "../img/products.png", "../img/purchase-history.png", "../img/receipt.png", "../img/registration.png"],
+                    links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Jomelle-s-Toys-and-Accessories-E-Commerce-System/blob/main/documentation/user-manual.md" }, { label: "View Source", class: "btn-primary", href: "https://github.com/JohnIvan-Ello/Jomelle-s-Toys-and-Accessories-E-Commerce-System" }] 
+                },
+                { 
+                    title: "Haribon Real Estate E-Commerce System", 
+                    desc: "A mobile-first platform designed for property sales and rentals.", 
+                    img: "../img/haribonestatemodal.jpg", 
+                    images: ["../img/haribonestatemodal.jpg", "../img/contacts.png", "../img/favorite-tab.png", "../img/hre-homepage1.png", "../img/hre-homepage2.png", "../img/property-list.png", "../img/property-page1.png", "../img/property-page2.png", "../img/qualities.png", "../img/residences.png", "../img/sorting.png", "../img/subscription.png"],
+                    links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Haribon-Matrix-Hardware-E-Commerce/blob/main/documentation/user-manual.md" }, { label: "View Source", class: "btn-primary", href: "https://github.com/JohnIvan-Ello/Haribon-Real-Estate-E-Commerce-System" }] 
+                },
+                { 
+                    title: "Haribon Matrix Hardware E-Commerce", 
+                    desc: "A web-based platform for a hardware supplies store.", 
+                    img: "../img/haribonmatrixmodal.jpg", 
+                    images: ["../img/haribonmatrixmodal.jpg", "../img/hm-checkout.png", "../img/hm-company-details.png", "../img/hm-edit-profile.png", "../img/hm-forgot-password.png", "../img/homepage.png", "../img/mission-vision.png", "../img/order-placement.png", "../img/product-categories.png", "../img/product-details.png"],
+                    links: [{ label: "View Previews", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Haribon-Real-Estate-E-Commerce-System/blob/main/documentation/user-manual.md" }, { label: "View Source", class: "btn-primary", href: "https://github.com/JohnIvan-Ello/Haribon-Matrix-Hardware-E-Commerce" }] 
+                }
             ],
             iot: [
-                { title: "AquaNova (Published)", desc: "An autonomous aquatic trash collector powered by solar and battery energy. It uses Arduino Nano control, Raspberry Pi with CNN and YOLOv8.", img: "img/aquanovamodal.png", links: [{ label: "View Project Archive", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/AquaNova" }] },
-                { title: "HydroSent", desc: "An AI-powered trash detection and collection robot for water bodies. It integrates Arduino, GPS, compass, height sensors, and a conveyor belt.", img: "img/hydrosentmodal.jpg", links: [{ label: "Project Archive", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/HydroSent" }] },
-                { title: "Rescootert", desc: "An amphibious search-and-rescue robot with Arduino and Auger Propulsion for flooded and unstable terrain.", img: "img/rescootertmodal.jpg", links: [{ label: "Project Archive", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Rescootert" }] }
+                { 
+                    title: "AquaNova (Published)", 
+                    desc: "An autonomous aquatic trash collector powered by solar and battery energy. It uses Arduino Nano control, Raspberry Pi with CNN and YOLOv8.", 
+                    img: "../img/aquanovamodal.png", 
+                    images: ["../img/aquanovamodal.png", "../img/aq-hardware-integration.png",, "../img/manual-control-panel.png",  "../img/training-detection.png", "../img/trash-detection.png", "../img/waypoints-manager.png"],
+                    links: [{ label: "View Project Archive", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/AquaNova" }] 
+                },
+                { 
+                    title: "HydroSent", 
+                    desc: "An AI-powered trash detection and collection robot for water bodies. It integrates Arduino, GPS, compass, height sensors, and a conveyor belt.", 
+                    img: "../img/hydrosentmodal.jpg", 
+                    images: ["../img/hydrosentmodal.jpg", "../img/arduino.png", "../img/control-panel.png", "../img/dataset.png", "../img/detected-trash.png", "../img/hs-hardware-integration.png", "../img/hs-hardware-parts.png", "../img/plastic-trash.png", "../img/results.png", "../img/training-data.jpg"],
+                    links: [{ label: "Project Archive", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/HydroSent" }] 
+                },
+                { 
+                    title: "Rescootert", 
+                    desc: "An amphibious search-and-rescue robot with Arduino and Auger Propulsion for flooded and unstable terrain.", 
+                    img: "../img/rescootertmodal.jpg", 
+                    images: ["../img/rescootertmodal.jpg", "../img/circuit-diagram.png"],
+                    links: [{ label: "Project Archive", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Rescootert" }] 
+                }
             ],
             qa: [
                 { 
                     title: "Unleash App", 
                     desc: "Quality assurance testing conducted for the Unleash App as part of the Unleash Game Development QA workflow using Jira. The process involved creating structured test scripts and test cases, identifying defects across QA and production environments for each release version, and documenting Proof of Testing (POT) to ensure feature stability and functionality.", 
-                    img: "img/unleashmodal.png", 
+                    img: "../img/unleashmodal.png", 
                     links: [{ label: "More Details", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Software-Testing-Archives/tree/main/Unleash-App" }] 
                 },
                 { 
                     title: "Ospital ng Makati System", 
                     desc: "Comprehensive QA Lead testing performed for the Ospital ng Makati System, covering module-based validation, regression testing, and defect identification. Test data preparation and Proof of Testing (POT) documentation were used to verify system reliability, functionality, and performance across assigned modules.", 
-                    img: "img/osmakmodal.png", 
+                    img: "../img/osmakmodal.png", 
                     links: [{ label: "More Details", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Software-Testing-Archives/tree/main/Ospital%20ng%20Makati%20System" }] 
                 },
                 { 
                     title: "Shopee Mobile Application", 
                     desc: "Extensive functional testing of the Shopee mobile shopping application through the development and execution of over 100 test cases. Core features tested include login and registration, product search and filtering, add to cart functionality, checkout and payment workflows, and order history validation.", 
-                    img: "img/shopeemodal.png", 
+                    img: "../img/shopeemodal.png", 
                     links: [{ label: "More Details", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Software-Testing-Archives/tree/main/Shopee%20Mobile%20Application" }] 
                 },
                 { 
                     title: "Makati Waste Management System", 
                     desc: "Quality assurance testing focused on validating system modules, identifying defects, and performing regression tests to maintain system stability. Testing activities included structured test data preparation and Proof of Testing (POT) documentation to support verification of system functionality.", 
-                    img: "img/mwmsmodal.png", 
+                    img: "../img/mwmsmodal.png", 
                     links: [{ label: "More Details", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Software-Testing-Archives/tree/main/Makati%20Waste%20Management%20System" }] 
                 },
                 { 
                     title: "PlantAI", 
                     desc: "An AI-powered classification platform designed for automated botanical identification. The system processes uploaded images to accurately detect and categorize specific plant species, such as tobacco, leveraging computer vision to provide instant diagnostic feedback.", 
-                    img: "img/plantaimodal.jpg", 
+                    img: "../img/plantaimodal.jpg", 
                     links: [{ label: "More Details", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Software-Testing-Archives/tree/main/PlantAI" }]
                 },
                 { 
                     title: "AquaNova", 
                     desc: "Test cases developed to validate the operational performance of AquaNova, an AI-powered aquatic trash collection robot. Testing covered navigation behavior, detection capabilities, and system responses across different operational scenarios to ensure reliable functionality.", 
-                    img: "img/qanovamodal.png", 
+                    img: "../img/qanovamodal.png", 
                     links: [{ label: "More Details", class: "btn-secondary", href: "https://github.com/JohnIvan-Ello/Software-Testing-Archives/tree/main/AquaNova" }] 
                 }
             ]
@@ -518,8 +647,25 @@
                 card.className = 'internal-card';
                 card.style.animationDelay = `${(index * 0.1) + 0.2}s`;
 
+                let imageHTML = '';
+                if (category !== 'qa' && proj.images && proj.images.length > 1) {
+                    let slides = proj.images.map((imgSrc, i) => `<img src="${imgSrc}" class="slide-img ${i === 0 ? 'active' : ''}" data-index="${i}">`).join('');
+                    let indicators = proj.images.map((_, i) => `<span class="indicator ${i === 0 ? 'active' : ''}"></span>`).join('');
+                    imageHTML = `
+                        <div class="slideshow-wrapper" onmouseenter="startSlideshow(this)" onmouseleave="stopSlideshow(this)">
+                            ${slides}
+                            <button class="slide-arrow prev" onclick="changeSlide(this, -1, event)"><i class="fa-solid fa-chevron-left"></i></button>
+                            <button class="slide-arrow next" onclick="changeSlide(this, 1, event)"><i class="fa-solid fa-chevron-right"></i></button>
+                            <div class="slide-indicators">
+                                ${indicators}
+                            </div>
+                        </div>`;
+                } else {
+                    imageHTML = `<img src="${proj.img}" class="static-img">`;
+                }
+
                 card.innerHTML = `
-                        <img src="${proj.img}">
+                        ${imageHTML}
                         <div class="internal-card-info">
                             <h3>${proj.title}</h3>
                             <p>${proj.desc}</p>
@@ -539,6 +685,8 @@
             modal.classList.remove('active');
             setTimeout(() => modal.style.display = 'none', 400);
             document.body.style.overflow = 'auto';
+            slideshowIntervals.forEach((interval) => clearInterval(interval));
+            slideshowIntervals.clear();
         }
 
         function handleOverlayClick(event) { if (event.target.id === 'project-modal') closeProjectModal(); }
