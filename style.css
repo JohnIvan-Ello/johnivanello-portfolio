@@ -40,12 +40,12 @@ body::before {
     width: 100%;
     height: 100%;
     z-index: -1; 
-    pointer-events: none; /* THIS FIXED THE INVISIBLE CLICK-BLOCKING WALL */
+    pointer-events: none; /* Allows clicks to pass through the grid */
     background-image: 
         linear-gradient(var(--border-color) 1px, transparent 1px),
         linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
     background-size: 50px 50px;
-    opacity: 0.3;
+    opacity: 0.55;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -783,7 +783,6 @@ section#contact.modern-footer-section {
     .nav-toggle:checked ~ .nav-toggle-label span::before { transform: rotate(45deg); top: 0; }
     .nav-toggle:checked ~ .nav-toggle-label span::after { transform: rotate(-45deg); top: 0; }
 
-    /* THIS FIXES THE INVISIBLE MENU BLOCKING CLICKS */
     .nav-links { 
         position: absolute; top: calc(100% + 10px); left: 0; width: 100%; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 20px; flex-direction: column; padding: 0; max-height: 0; overflow: hidden; gap: 1.5rem; transition: all 0.4s ease-in-out; opacity: 0; 
         visibility: hidden; 
@@ -791,7 +790,6 @@ section#contact.modern-footer-section {
         z-index: 1500;
     }
     
-    /* THIS ALLOWS YOU TO CLICK LINKS WHEN IT OPENS */
     .nav-toggle:checked ~ .nav-links { 
         max-height: 400px; padding: 1.5rem; opacity: 1; 
         visibility: visible; 
@@ -821,6 +819,7 @@ section#contact.modern-footer-section {
     display: flex;
     flex-direction: column;
     align-items: flex-end;
+    pointer-events: none; /* THIS FIXES THE INVISIBLE WALL BUG */
 }
 
 .versa-toggle {
@@ -837,6 +836,7 @@ section#contact.modern-footer-section {
     cursor: pointer;
     box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: auto; /* KEEPS THE BUTTON CLICKABLE */
 }
 
 .versa-toggle:hover {
@@ -863,7 +863,7 @@ section#contact.modern-footer-section {
 
 .versa-window.active {
     opacity: 1;
-    pointer-events: auto;
+    pointer-events: auto; /* ALLOWS CLICKS INSIDE THE WINDOW WHEN OPEN */
     transform: translateY(0) scale(1);
 }
 
