@@ -768,7 +768,13 @@ section#contact.modern-footer-section {
 @media (max-width: 900px) {
     .banner-nav { display: none; } 
     .navbar { width: 90%; max-width: 500px; padding: 1rem 1.5rem; justify-content: center; border-radius: 25px; }
-    .nav-toggle-label { display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; cursor: pointer; margin: 0 auto; }
+    
+    /* MODIFIED: Ensure nav toggle is above everything and links don't block clicks when hidden */
+    .nav-toggle-label { 
+        display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; cursor: pointer; margin: 0 auto; 
+        position: relative; z-index: 2000; 
+    }
+    
     .nav-toggle-label span, .nav-toggle-label span::before, .nav-toggle-label span::after { display: block; background: #fff; height: 3px; width: 25px; border-radius: 2px; position: relative; transition: all 0.3s ease-in-out; }
     .nav-toggle-label span::before { content: ''; position: absolute; top: -8px; }
     .nav-toggle-label span::after { content: ''; position: absolute; top: 8px; }
@@ -777,8 +783,17 @@ section#contact.modern-footer-section {
     .nav-toggle:checked ~ .nav-toggle-label span::before { transform: rotate(45deg); top: 0; }
     .nav-toggle:checked ~ .nav-toggle-label span::after { transform: rotate(-45deg); top: 0; }
 
-    .nav-links { position: absolute; top: calc(100% + 10px); left: 0; width: 100%; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 20px; flex-direction: column; padding: 0; max-height: 0; overflow: hidden; gap: 1.5rem; transition: all 0.4s ease-in-out; opacity: 0; }
-    .nav-toggle:checked ~ .nav-links { max-height: 400px; padding: 1.5rem; opacity: 1; }
+    /* MODIFIED: Added pointer-events: none to hidden links so they don't block the button */
+    .nav-links { 
+        position: absolute; top: calc(100% + 10px); left: 0; width: 100%; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 20px; flex-direction: column; padding: 0; max-height: 0; overflow: hidden; gap: 1.5rem; transition: all 0.4s ease-in-out; opacity: 0; 
+        pointer-events: none; 
+    }
+    
+    /* MODIFIED: Added pointer-events: auto to restore clickability when open */
+    .nav-toggle:checked ~ .nav-links { 
+        max-height: 400px; padding: 1.5rem; opacity: 1; 
+        pointer-events: auto; 
+    }
     
     .hero-content-wrapper { flex-direction: column-reverse; text-align: center; gap: 3rem; }
     .bithell-logo { font-size: 3rem; }
