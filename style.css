@@ -26,25 +26,14 @@ body {
     color: var(--text-color);
     line-height: 1.6;
     background-color: var(--bg-color); 
+    background-image: 
+        linear-gradient(rgba(0, 240, 255, 0.15) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 240, 255, 0.15) 1px, transparent 1px);
+    background-size: 50px 50px;
+    background-attachment: fixed;
     overflow-x: hidden;
     width: 100%;
     position: relative; 
-}
-
-/* --- THE GRID --- */
-body::before {
-    content: "";
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: -1; 
-    background-image: 
-        linear-gradient(var(--border-color) 1px, transparent 1px),
-        linear-gradient(90deg, var(--border-color) 1px, transparent 1px);
-    background-size: 50px 50px;
-    opacity: 0.55;
 }
 
 a { text-decoration: none; color: inherit; }
@@ -769,7 +758,6 @@ section#contact.modern-footer-section {
     .banner-nav { display: none; } 
     .navbar { width: 90%; max-width: 500px; padding: 1rem 1.5rem; justify-content: center; border-radius: 25px; }
     
-    /* MODIFIED: Ensure nav toggle is above everything and links don't block clicks when hidden */
     .nav-toggle-label { 
         display: flex; align-items: center; justify-content: center; width: 30px; height: 30px; cursor: pointer; margin: 0 auto; 
         position: relative; z-index: 2000; 
@@ -783,16 +771,14 @@ section#contact.modern-footer-section {
     .nav-toggle:checked ~ .nav-toggle-label span::before { transform: rotate(45deg); top: 0; }
     .nav-toggle:checked ~ .nav-toggle-label span::after { transform: rotate(-45deg); top: 0; }
 
-    /* MODIFIED: Added pointer-events: none to hidden links so they don't block the button */
     .nav-links { 
         position: absolute; top: calc(100% + 10px); left: 0; width: 100%; background: rgba(5, 5, 5, 0.95); backdrop-filter: blur(10px); border: 1px solid var(--border-color); border-radius: 20px; flex-direction: column; padding: 0; max-height: 0; overflow: hidden; gap: 1.5rem; transition: all 0.4s ease-in-out; opacity: 0; 
-        pointer-events: none; 
+        visibility: hidden; 
     }
     
-    /* MODIFIED: Added pointer-events: auto to restore clickability when open */
     .nav-toggle:checked ~ .nav-links { 
         max-height: 400px; padding: 1.5rem; opacity: 1; 
-        pointer-events: auto; 
+        visibility: visible; 
     }
     
     .hero-content-wrapper { flex-direction: column-reverse; text-align: center; gap: 3rem; }
